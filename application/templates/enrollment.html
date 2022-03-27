@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+    {% block content %}
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+        {% if not classes %}
+            <h2>You are not enrolled.</h2>
+            <p> </p>
+        {% else %}
+            <h2>You are enrolled in:</h2>
+        
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Course ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Credits</th>
+                    <th scope="col">Term</th>
+                    <th scope="col">Enroll</th>
+                </tr>
+                </thead>
+                <tbody>
+    
+                <!-- Construct the rest of courses here -->
+    
+                {% for class in classes %}
+                <tr>
+                    <td scope='row'>{{class.r2.courseID}}</td>
+                    <td>{{class.r2.title}}</td>
+                    <td>{{class.r2.description}}</td>
+                    <td>{{class.r2.credits}}</td>
+                    <td>{{class.r2.term}}</td>
+                    <td>
+                        <form action="{{url_for('enrollment')}}" method="POST">
+                            <input type="hidden" name="courseID" value="{{ class.courseID }}">
+                            <input type="hidden" name="title" value="{{ class.title }}"> 
+                            <!-- we can get data in 2 ways -->
+                            <input type="hidden" name="term" value="{{ class.term }}">
+                            <button>Enroll</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                
+                </tbody>
+            </table>
+
+        {% endif %}
+        </div>
+                  
+            
+    </div>
+
+    {% endblock %}
